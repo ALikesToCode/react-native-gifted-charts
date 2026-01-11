@@ -32,31 +32,42 @@ const data = [
 | `fill` | String | Color of the chart fill | `'none'` |
 | `showGradient` | Boolean | Enable gradient fill | `false` |
 | `gradientColor` | String | Color for the gradient | `undefined` |
+| `showGlow` | Boolean | Enable a glowing effect around the chart | `false` |
+| `glowColor` | String | Color of the glow | `'rgba(255, 255, 255, 0.2)'` |
+| `focusEnabled` | Boolean | Enable focus state on press | `false` |
+| `highlightColor` | String | Color of the highlighted data point | `'orange'` |
+| `highlightRadius` | Number | Radius of the highlighted data point | `6` |
+| `showPopup` | Boolean | Show a popup view when a point is focused | `false` |
+| `popupView` | Function | Custom component to render as popup `(item, index) => ReactElement` | `undefined` |
 
 ## Advanced Customization
 
-### Custom Data Points
+### Interactivity & Popup
 
-You can render custom elements like icons or complex shapes at each vertex using `renderDataPoint`.
+Enable focus and show a custom popup when a data point is clicked.
 
 ```jsx
 <RadarChart
   data={data}
-  renderDataPoint={(item, index, x, y) => (
-    <View key={index} style={{position: 'absolute', top: y - 10, left: x - 10}}>
-      <MyCustomIcon />
+  focusEnabled
+  showPopup
+  popupView={(item, index) => (
+    <View style={{backgroundColor: 'black', padding: 5, borderRadius: 4}}>
+      <Text style={{color: 'white'}}>{item.value}</Text>
     </View>
   )}
+  onPress={(item) => console.log(item)}
 />
 ```
 
-### Interactivity
+### Visual Effects
 
-Capture press events on specific data points.
+Add a premium generic glow.
 
 ```jsx
 <RadarChart
   data={data}
-  onPress={(item, index) => console.log('Parsed item:', item)}
+  showGlow
+  glowColor="cyan"
 />
 ```

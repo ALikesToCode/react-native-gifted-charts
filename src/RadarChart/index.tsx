@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Animated, View } from 'react-native';
 import Svg, {
   Line,
@@ -21,6 +21,13 @@ interface ExtendedRadarChartProps extends RadarChartProps {
   dataPointsRadius?: number;
   renderDataPoint?: (data: any, index: number, x: number, y: number) => React.ReactElement;
   onPress?: (item: any, index: number) => void;
+  showGlow?: boolean;
+  glowColor?: string;
+  focusEnabled?: boolean;
+  showPopup?: boolean;
+  popupView?: (item: any, index: number) => React.ReactElement;
+  highlightColor?: string;
+  highlightRadius?: number;
 }
 
 export const RadarChart = (props: ExtendedRadarChartProps) => {
@@ -81,7 +88,16 @@ export const RadarChart = (props: ExtendedRadarChartProps) => {
     dataPointsRadius = 4,
     renderDataPoint,
     onPress,
+    showGlow,
+    glowColor = 'rgba(255, 255, 255, 0.2)',
+    focusEnabled,
+    showPopup,
+    popupView,
+    highlightColor = 'orange',
+    highlightRadius = 6,
   } = props;
+
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const initialPolygonPointsAr = initialPolygonPoints.split(' ');
   const finalPolygonPointsAr = polygonPoints.split(' ');
@@ -168,18 +184,47 @@ export const RadarChart = (props: ExtendedRadarChartProps) => {
         return renderDataPoint(item, index, x, y);
       }
 
+      const isSelected = index === selectedIndex && (!dataSet || dataSetIndex === undefined);
+
       return (
         <Circle
           key={`data-point-${dataSetIndex ?? ''}-${index}`}
           cx={x}
           cy={y}
-          r={dataPointsRadius}
-          fill={dataPointsColor}
-          onPress={() => onPress && onPress(item, index)}
+          r={isSelected ? highlightRadius : dataPointsRadius}
+          fill={isSelected ? highlightColor : dataPointsColor}
+          onPress={() => {
+            if (focusEnabled) {
+              setSelectedIndex(index);
+            }
+            onPress && onPress(item, index);
+          }}
         />
       );
     });
   };
+
+  const renderGlow = (points: any) => {
+    if (!showGlow) return null;
+    return (
+      <>
+        <AnimatedPolygon
+          points={points}
+          fill="none"
+          stroke={glowColor}
+          strokeWidth={(polygonStrokeWidth || 1) + 10}
+          strokeOpacity={0.2}
+        />
+        <AnimatedPolygon
+          points={points}
+          fill="none"
+          stroke={glowColor}
+          strokeWidth={(polygonStrokeWidth || 1) + 5}
+          strokeOpacity={0.4}
+        />
+      </>
+    )
+  }
 
   return (
     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -324,6 +369,7 @@ export const RadarChart = (props: ExtendedRadarChartProps) => {
 
             return (
               <Fragment key={`polygon-set-${index}`}>
+                {renderGlow(isAnimated ? animatedPolygonPoints : polygonPoints)}
                 <AnimatedPolygon
                   key={`polygon-${index}`}
                   points={isAnimated ? animatedPolygonPoints : polygonPoints}
@@ -339,6 +385,7 @@ export const RadarChart = (props: ExtendedRadarChartProps) => {
           })
         ) : (
           <Fragment>
+            {renderGlow(polygonIsAnimated ? animatedPaths : polygonPoints)}
             <AnimatedPolygon
               points={polygonIsAnimated ? animatedPaths : polygonPoints}
               fill={polygonShowGradient ? 'url(#polygon)' : polygonFill}
@@ -485,6 +532,19 @@ export const RadarChart = (props: ExtendedRadarChartProps) => {
             );
           })}
       </Svg>
+      {showPopup && selectedIndex !== -1 && (
+        <View style={{
+          position: 'absolute',
+          left: polarToCartesian(selectedIndex * angleStep + startAngle, data[selectedIndex]).x,
+          top: polarToCartesian(selectedIndex * angleStep + startAngle, data[selectedIndex]).y,
+          width: 0,
+          height: 0,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          {popupView ? popupView(data[selectedIndex], selectedIndex) : null}
+        </View>
+      )}
     </View>
   );
 };
