@@ -1,4 +1,4 @@
-import {Fragment, useCallback, useEffect, useMemo, useRef} from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useRef } from 'react';
 import {
   View,
   Animated,
@@ -9,7 +9,7 @@ import {
   I18nManager,
   ViewStyle,
 } from 'react-native';
-import {isWebApp, screenWidth, usePrevious} from '../utils';
+import { isWebApp, screenWidth, usePrevious } from '../utils';
 import Svg, {
   Path,
   LinearGradient,
@@ -45,8 +45,8 @@ import {
   Linecap,
 } from 'gifted-charts-core';
 import BarAndLineChartsWrapper from '../Components/BarAndLineChartsWrapper';
-import {StripAndLabel} from '../Components/common/StripAndLabel';
-import {Pointer} from '../Components/common/Pointer';
+import { StripAndLabel } from '../Components/common/StripAndLabel';
+import { Pointer } from '../Components/common/Pointer';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 const AnimatedRect = Animated.createAnimatedComponent(Rect);
@@ -354,7 +354,7 @@ export const LineChart = (props: LineChartPropsType) => {
     containerHeightIncludingBelowXAxis +
     (props.overflowBottom ?? dataPointsRadius1);
 
-  const {secondaryXAxis, intersectionAreaConfig} = props;
+  const { secondaryXAxis, intersectionAreaConfig } = props;
 
   const widthValuesFromSet = useMemo(
     () => dataSet?.map(set => new Animated.Value(0)),
@@ -369,20 +369,20 @@ export const LineChart = (props: LineChartPropsType) => {
   const animatedPath =
     animateOnDataChange && points && oldPoints && points !== oldPoints
       ? animatedPoints.interpolate({
-          inputRange: [0, 1],
-          outputRange: pointsWithPaddedRepititions(oldPoints, points),
-        })
+        inputRange: [0, 1],
+        outputRange: pointsWithPaddedRepititions(oldPoints, points),
+      })
       : '';
 
   const animatedFillPath =
     animateOnDataChange &&
-    fillPoints &&
-    oldFillPoints &&
-    fillPoints !== oldFillPoints
+      fillPoints &&
+      oldFillPoints &&
+      fillPoints !== oldFillPoints
       ? animatedFillPoints.interpolate({
-          inputRange: [0, 1],
-          outputRange: pointsWithPaddedRepititions(oldFillPoints, fillPoints),
-        })
+        inputRange: [0, 1],
+        outputRange: pointsWithPaddedRepititions(oldFillPoints, fillPoints),
+      })
       : '';
 
   useEffect(() => {
@@ -535,7 +535,7 @@ export const LineChart = (props: LineChartPropsType) => {
     bottom: 61 + xAxisLabelsVerticalShift + labelsExtraHeight - xAxisThickness,
     left: 0,
     zIndex: 1,
-    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
   };
 
   const renderLabel = (
@@ -552,21 +552,21 @@ export const LineChart = (props: LineChartPropsType) => {
             position: 'absolute',
             bottom: top
               ? containerHeight +
-                60 +
-                (secondaryXAxis?.labelsDistanceFromXaxis ?? 15)
+              60 +
+              (secondaryXAxis?.labelsDistanceFromXaxis ?? 15)
               : 54 - xAxisTextNumberOfLines * 18,
             zIndex: 10,
             width: spacing + labelsExtraHeight,
             left: spacing * index - spacing / 2,
             height: props.xAxisLabelsHeight ?? xAxisTextNumberOfLines * 18,
           },
-          rotateLabel && {transform: [{rotate: '60deg'}]},
+          rotateLabel && { transform: [{ rotate: '60deg' }] },
         ]}>
         {labelComponent ? (
           labelComponent()
         ) : (
           <Text
-            style={[{textAlign: 'center'}, labelTextStyle]}
+            style={[{ textAlign: 'center' }, labelTextStyle]}
             allowFontScaling={allowFontScaling}
             numberOfLines={xAxisTextNumberOfLines}>
             {label}
@@ -593,8 +593,8 @@ export const LineChart = (props: LineChartPropsType) => {
             position: 'absolute',
             bottom: top
               ? containerHeight +
-                60 +
-                (secondaryXAxis?.labelsDistanceFromXaxis ?? 15)
+              60 +
+              (secondaryXAxis?.labelsDistanceFromXaxis ?? 15)
               : rotateLabel
                 ? 10
                 : 54 - xAxisTextNumberOfLines * 18,
@@ -603,14 +603,14 @@ export const LineChart = (props: LineChartPropsType) => {
             left: spacing * index - spacing / 2,
             opacity: appearingOpacity,
           },
-          rotateLabel && {transform: [{rotate: '60deg'}]},
+          rotateLabel && { transform: [{ rotate: '60deg' }] },
         ]}>
         {labelComponent ? (
           labelComponent()
         ) : (
           <Text
             allowFontScaling={allowFontScaling}
-            style={[{textAlign: 'center'}, labelTextStyle]}
+            style={[{ textAlign: 'center' }, labelTextStyle]}
             numberOfLines={xAxisTextNumberOfLines}>
             {label}
           </Text>
@@ -975,7 +975,7 @@ export const LineChart = (props: LineChartPropsType) => {
                 : props.verticalLinesHeight
                   ? extendedContainerHeight - props.verticalLinesHeight
                   : (item.verticalLineUptoDataPoint ??
-                      props.verticalLinesUptoDataPoint)
+                    props.verticalLinesUptoDataPoint)
                     ? getY(item.value)
                     : -xAxisThickness
             }
@@ -1149,7 +1149,7 @@ export const LineChart = (props: LineChartPropsType) => {
       screenWidth:
         props.width ??
         Math.min(totalWidth, props.parentWidth ?? screenWidth) -
-          yAxisLabelWidth,
+        yAxisLabelWidth,
       hasDataSet: !!dataSet,
       containsNegative: mostNegativeValue < 0,
       horizontalStripConfig: pointerConfig?.horizontalStripConfig,
@@ -1203,7 +1203,7 @@ export const LineChart = (props: LineChartPropsType) => {
   };
 
   const getSpreadAreaPath = (
-    spreadAreaData: {lower: number; upper: number}[],
+    spreadAreaData: { lower: number; upper: number }[],
     getX: (spacingArray: number[], index: number) => number,
     getY: (val: number) => number,
     spacingArray: number[],
@@ -1281,7 +1281,7 @@ export const LineChart = (props: LineChartPropsType) => {
   const getColorBackRects = () => {
     return colors?.map(colorItem => {
       const key = JSON.stringify(colorItem);
-      const {from, to, color} = colorItem;
+      const { from, to, color } = colorItem;
       const y = getY(from);
       const height = getY(to) - getY(from);
       const rectProps = {
@@ -1301,7 +1301,7 @@ export const LineChart = (props: LineChartPropsType) => {
 
   const renderIntersection = () => {
     return (
-      <View style={[svgWrapperViewStyle as ViewStyle, {width: totalWidth}]}>
+      <View style={[svgWrapperViewStyle as ViewStyle, { width: totalWidth }]}>
         <Svg>
           {/* Define the pathe path1 & path2 */}
           <Path id="path1" d={fillPoints} fill="none" stroke={'none'} />
@@ -1393,103 +1393,103 @@ export const LineChart = (props: LineChartPropsType) => {
         )}
         {points2
           ? renderDataPoints(
-              hideDataPoints2,
-              data2,
-              props.data2,
-              dataPointsShape2,
-              dataPointsWidth2,
-              dataPointsHeight2,
-              dataPointsColor2,
-              dataPointsRadius2,
-              textColor2,
-              textFontSize2,
-              startIndex2,
-              endIndex2,
-              false,
-              showValuesAsDataPointsText,
-              cumulativeSpacing2,
-              1,
-            )
+            hideDataPoints2,
+            data2,
+            props.data2,
+            dataPointsShape2,
+            dataPointsWidth2,
+            dataPointsHeight2,
+            dataPointsColor2,
+            dataPointsRadius2,
+            textColor2,
+            textFontSize2,
+            startIndex2,
+            endIndex2,
+            false,
+            showValuesAsDataPointsText,
+            cumulativeSpacing2,
+            1,
+          )
           : null}
         {points3
           ? renderDataPoints(
-              hideDataPoints3,
-              data3,
-              props.data3,
-              dataPointsShape3,
-              dataPointsWidth3,
-              dataPointsHeight3,
-              dataPointsColor3,
-              dataPointsRadius3,
-              textColor3,
-              textFontSize3,
-              startIndex3,
-              endIndex3,
-              false,
-              showValuesAsDataPointsText,
-              cumulativeSpacing3,
-              2,
-            )
+            hideDataPoints3,
+            data3,
+            props.data3,
+            dataPointsShape3,
+            dataPointsWidth3,
+            dataPointsHeight3,
+            dataPointsColor3,
+            dataPointsRadius3,
+            textColor3,
+            textFontSize3,
+            startIndex3,
+            endIndex3,
+            false,
+            showValuesAsDataPointsText,
+            cumulativeSpacing3,
+            2,
+          )
           : null}
         {points4
           ? renderDataPoints(
-              hideDataPoints4,
-              data4,
-              props.data4,
-              dataPointsShape4,
-              dataPointsWidth4,
-              dataPointsHeight4,
-              dataPointsColor4,
-              dataPointsRadius4,
-              textColor4,
-              textFontSize4,
-              startIndex4,
-              endIndex4,
-              false,
-              showValuesAsDataPointsText,
-              cumulativeSpacing4,
-              3,
-            )
+            hideDataPoints4,
+            data4,
+            props.data4,
+            dataPointsShape4,
+            dataPointsWidth4,
+            dataPointsHeight4,
+            dataPointsColor4,
+            dataPointsRadius4,
+            textColor4,
+            textFontSize4,
+            startIndex4,
+            endIndex4,
+            false,
+            showValuesAsDataPointsText,
+            cumulativeSpacing4,
+            3,
+          )
           : null}
         {points5
           ? renderDataPoints(
-              hideDataPoints5,
-              data5,
-              props.data5,
-              dataPointsShape5,
-              dataPointsWidth5,
-              dataPointsHeight5,
-              dataPointsColor5,
-              dataPointsRadius5,
-              textColor5,
-              textFontSize5,
-              startIndex5,
-              endIndex5,
-              false,
-              showValuesAsDataPointsText,
-              cumulativeSpacing5,
-              4,
-            )
+            hideDataPoints5,
+            data5,
+            props.data5,
+            dataPointsShape5,
+            dataPointsWidth5,
+            dataPointsHeight5,
+            dataPointsColor5,
+            dataPointsRadius5,
+            textColor5,
+            textFontSize5,
+            startIndex5,
+            endIndex5,
+            false,
+            showValuesAsDataPointsText,
+            cumulativeSpacing5,
+            4,
+          )
           : null}
         {secondaryPoints
           ? renderDataPoints(
-              secondaryLineConfig.hideDataPoints,
-              secondaryData,
-              props.secondaryData,
-              secondaryLineConfig.dataPointsShape,
-              secondaryLineConfig.dataPointsWidth,
-              secondaryLineConfig.dataPointsHeight,
-              secondaryLineConfig.dataPointsColor,
-              secondaryLineConfig.dataPointsRadius,
-              secondaryLineConfig.textColor,
-              secondaryLineConfig.textFontSize,
-              secondaryLineConfig.startIndex,
-              secondaryLineConfig.endIndex,
-              true,
-              secondaryLineConfig.showValuesAsDataPointsText,
-              cumulativeSpacingSecondary,
-              6666,
-            )
+            secondaryLineConfig.hideDataPoints,
+            secondaryData,
+            props.secondaryData,
+            secondaryLineConfig.dataPointsShape,
+            secondaryLineConfig.dataPointsWidth,
+            secondaryLineConfig.dataPointsHeight,
+            secondaryLineConfig.dataPointsColor,
+            secondaryLineConfig.dataPointsRadius,
+            secondaryLineConfig.textColor,
+            secondaryLineConfig.textFontSize,
+            secondaryLineConfig.startIndex,
+            secondaryLineConfig.endIndex,
+            true,
+            secondaryLineConfig.showValuesAsDataPointsText,
+            cumulativeSpacingSecondary,
+            6666,
+          )
           : null}
       </>
     );
@@ -1541,7 +1541,7 @@ export const LineChart = (props: LineChartPropsType) => {
     const spreadAreaColor = props.spreadAreaColor;
     const spreadAreaOpacity = props.spreadAreaOpacity;
 
-    let ar: LineProperties[] = [{d: '', color: '', strokeWidth: 0}];
+    let ar: LineProperties[] = [{ d: '', color: '', strokeWidth: 0 }];
     if (points.includes(RANGE_ENTER)) {
       ar = getRegionPathObjects(
         points,
@@ -1587,11 +1587,51 @@ export const LineChart = (props: LineChartPropsType) => {
     ) {
       lineSvgPropsOuter.strokeDasharray = strokeDashArray;
     }
+
+    const renderGlowPaths = () => {
+      // @ts-ignore
+      const showGlow = props.dataSet?.[Number(key)]?.showGlow || props.showGlow;
+      // @ts-ignore
+      const glowColor = props.dataSet?.[Number(key)]?.glowColor || props.glowColor || 'rgba(255, 255, 255, 0.2)';
+
+      const glowColorStr = typeof glowColor === 'string' ? glowColor : 'white';
+
+      if (!showGlow) return null;
+
+      const pathProps = {
+        d: animateOnDataChange && animatedPath ? animatedPath : points,
+        fill: 'none',
+        stroke: glowColorStr,
+        strokeLinecap,
+      };
+
+      const renderPath = (strokeWidth: number, opacity: number) => {
+        return animateOnDataChange && animatedPath ? (
+          <AnimatedPath
+            {...pathProps}
+            strokeWidth={strokeWidth}
+            opacity={opacity}
+          />
+        ) : (
+          <Path {...pathProps} strokeWidth={strokeWidth} opacity={opacity} />
+        );
+      };
+
+      return (
+        <>
+          {renderPath((currentLineThickness || thickness) + 12, 0.2)}
+          {renderPath((currentLineThickness || thickness) + 6, 0.4)}
+          {renderPath((currentLineThickness || thickness) + 2, 0.6)}
+        </>
+      );
+    };
+
     return (
       <Svg
         height={svgHeight}
         // width={widthValue}
         onPress={props.onBackgroundPress}>
+        {renderGlowPaths()}
         {lineGradient && getLineGradientComponent()}
         {points.includes(SEGMENT_START) || points.includes(RANGE_ENTER) ? (
           ar.map((item, index) => {
@@ -1644,22 +1684,22 @@ export const LineChart = (props: LineChartPropsType) => {
           getClipRange(startIndex, endIndex, clipRangeId)}
         {isNthAreaChart ? (
           props.interpolateMissingValues === false &&
-          propsData.some(
-            (item: any) => isNaN(item.value), // if we have a null/undefined value in data & interpolation is disabled, then don't render area
-          ) ? null : animateOnDataChange && animatedFillPath ? (
-            <AnimatedPath
-              onPress={props.onChartAreaPress}
-              d={animatedFillPath}
-              fill={
-                props.areaGradientId
-                  ? `url(#${props.areaGradientId})`
-                  : `url(#${uniqueId})`
-              }
-              clipPath={`url(#${clipRangeId})`}
-              stroke={'none'}
-              strokeWidth={currentLineThickness || thickness}
-            />
-          ) : (
+            propsData.some(
+              (item: any) => isNaN(item.value), // if we have a null/undefined value in data & interpolation is disabled, then don't render area
+            ) ? null : animateOnDataChange && animatedFillPath ? (
+              <AnimatedPath
+                onPress={props.onChartAreaPress}
+                d={animatedFillPath}
+                fill={
+                  props.areaGradientId
+                    ? `url(#${props.areaGradientId})`
+                    : `url(#${uniqueId})`
+                }
+                clipPath={`url(#${clipRangeId})`}
+                stroke={'none'}
+                strokeWidth={currentLineThickness || thickness}
+              />
+            ) : (
             <Path
               onPress={props.onChartAreaPress}
               d={fillPoints}
@@ -1709,23 +1749,23 @@ export const LineChart = (props: LineChartPropsType) => {
         {/***  !!! Here it's done 5 times intentionally, so that onPress works for each line !!!  ***/}
         {isAnimated && !renderDataPointsAfterAnimationEnds // in this condition onPress won't work properly in case of multi-line, so it's suggested to use either renderDataPointsAfterAnimationEnds prop if you want to use onPress for data points
           ? renderDataPoints(
-              hideDataPoints,
-              data,
-              propsData,
-              dataPointsShape,
-              dataPointsWidth,
-              dataPointsHeight,
-              dataPointsColor,
-              dataPointsRadius,
-              textColor,
-              textFontSize,
-              startIndex,
-              endIndex,
-              isSecondary,
-              showValuesAsDataPointsText,
-              spacingArray,
-              key,
-            )
+            hideDataPoints,
+            data,
+            propsData,
+            dataPointsShape,
+            dataPointsWidth,
+            dataPointsHeight,
+            dataPointsColor,
+            dataPointsRadius,
+            textColor,
+            textFontSize,
+            startIndex,
+            endIndex,
+            isSecondary,
+            showValuesAsDataPointsText,
+            spacingArray,
+            key,
+          )
           : key === lastLineNumber - 1
             ? renderDataPointsForEachLine()
             : null}
@@ -1854,10 +1894,10 @@ export const LineChart = (props: LineChartPropsType) => {
         }
         const y = item
           ? containerHeight -
-            (item.value * containerHeight) /
-              (set.isSecondary ? secondaryMaxValue : maxValue) -
-            (pointerRadius || pointerHeight / 2) +
-            10
+          (item.value * containerHeight) /
+          (set.isSecondary ? secondaryMaxValue : maxValue) -
+          (pointerRadius || pointerHeight / 2) +
+          10
           : 0;
         return y;
       });
@@ -2179,9 +2219,9 @@ export const LineChart = (props: LineChartPropsType) => {
       const y1 = currentStripHeight
         ? containerHeight - currentStripHeight + 8
         : containerHeight -
-          (item.dataPointHeight ?? dataPointsHeight1) / 2 +
-          14 -
-          ((item.value ?? 0) * containerHeight) / maxValue;
+        (item.dataPointHeight ?? dataPointsHeight1) / 2 +
+        14 -
+        ((item.value ?? 0) * containerHeight) / maxValue;
 
       const actualStripHeight =
         currentStripHeight ||
@@ -2207,7 +2247,7 @@ export const LineChart = (props: LineChartPropsType) => {
     return (
       <>
         {Object.keys(strips).length > 0 ||
-        (focusEnabled && showStripOnFocus && selectedIndex !== -1) ? ( // render focus strips separately (so that it's rendered below the data points unless specified otherwise)
+          (focusEnabled && showStripOnFocus && selectedIndex !== -1) ? ( // render focus strips separately (so that it's rendered below the data points unless specified otherwise)
           <View
             pointerEvents="none"
             style={[
@@ -2225,7 +2265,7 @@ export const LineChart = (props: LineChartPropsType) => {
               }>
               {Object.keys(strips).map((stripKey: any) => {
                 return Object.keys(strips[stripKey]).map((ind: any) => {
-                  const {item, index, key} = strips[stripKey][ind];
+                  const { item, index, key } = strips[stripKey][ind];
                   return renderStrips(item, index, key);
                 });
               })}
@@ -2233,13 +2273,13 @@ export const LineChart = (props: LineChartPropsType) => {
                 <>
                   {dataSet && pointsFromSet.length
                     ? dataSet.map((set, ind) => {
-                        return set.data.map((item, index) =>
-                          renderStrips(item, index, ind),
-                        );
-                      })
+                      return set.data.map((item, index) =>
+                        renderStrips(item, index, ind),
+                      );
+                    })
                     : props.data?.map((item, index) =>
-                        renderStrips(item, index, 0),
-                      )}
+                      renderStrips(item, index, 0),
+                    )}
                   {props.data2?.map((item, index) =>
                     renderStrips(item, index, 1),
                   )}
@@ -2263,526 +2303,526 @@ export const LineChart = (props: LineChartPropsType) => {
         {dataSet
           ? pointsFromSet.length
             ? dataSet.map((set, index) => {
-                if (isAnimated) {
-                  return renderAnimatedLine(
-                    containerHeightIncludingBelowXAxis,
-                    set.zIndex ?? zIndex1,
-                    pointsFromSet[index],
-                    widthValue,
-                    set.thickness ?? thickness1,
-                    set.color ?? color1,
-                    fillPointsFromSet[index],
-                    set.startFillColor ?? startFillColor1,
-                    set.endFillColor ?? endFillColor1,
-                    set.startOpacity ?? startOpacity1,
-                    set.endOpacity ?? endOpacity1,
-                    set.strokeDashArray ?? strokeDashArray1,
-                    set.strokeLinecap ?? strokeLinecap1,
-                    set.showArrow || props.showArrows,
-                    arrowPointsFromSet[index],
-                    arrowStrokeWidthsFromSet?.[index],
-                    arrowStrokeColorsFromSet?.[index],
-                    arrowFillColorsFromSet?.[index],
-                    set.hideDataPoints ?? hideDataPoints1,
-                    set.data,
-                    adjustToOffset(set.data, -(props.yAxisOffset ?? 0)), // need the actual values passed by user
-                    set.dataPointsShape ?? dataPointsShape1,
-                    set.dataPointsWidth ?? dataPointsWidth1,
-                    set.dataPointsHeight ?? dataPointsHeight1,
-                    set.dataPointsColor ?? dataPointsColor1,
-                    set.dataPointsRadius ?? dataPointsRadius1,
-                    set.textColor ?? textColor1,
-                    set.textFontSize ?? textFontSize1,
-                    set.startIndex ?? 0,
-                    set.endIndex ?? set.data.length - 1,
-                    set.isSecondary,
-                    showValuesAsDataPointsText,
-                    cumulativeSpacingForSet[index],
-                    index,
-                  );
-                } else {
-                  return renderLine(
-                    containerHeightIncludingBelowXAxis,
-                    set.zIndex ?? zIndex1,
-                    pointsFromSet[index],
-                    set.thickness ?? thickness1,
-                    set.color ?? color1,
-                    fillPointsFromSet[index],
-                    set.startFillColor ?? startFillColor1,
-                    set.endFillColor ?? endFillColor1,
-                    set.startOpacity ?? startOpacity1,
-                    set.endOpacity ?? endOpacity1,
-                    set.strokeDashArray ?? strokeDashArray1,
-                    set.strokeLinecap ?? strokeLinecap1,
-                    set.showArrow || props.showArrows,
-                    arrowPointsFromSet[index],
-                    arrowStrokeWidthsFromSet?.[index],
-                    arrowStrokeColorsFromSet?.[index],
-                    arrowFillColorsFromSet?.[index],
-                    set.hideDataPoints ?? hideDataPoints1,
-                    set.data,
-                    adjustToOffset(set.data, -(props.yAxisOffset ?? 0)), // need the actual values passed by user
-                    set.dataPointsShape ?? dataPointsShape1,
-                    set.dataPointsWidth ?? dataPointsWidth1,
-                    set.dataPointsHeight ?? dataPointsHeight1,
-                    set.dataPointsColor ?? dataPointsColor1,
-                    set.dataPointsRadius ?? dataPointsRadius1,
-                    set.textColor ?? textColor1,
-                    set.textFontSize ?? textFontSize1,
-                    set.startIndex ?? 0,
-                    set.endIndex ?? set.data.length - 1,
-                    set.isSecondary,
-                    showValuesAsDataPointsText,
-                    cumulativeSpacingForSet[index],
-                    index,
-                  );
-                }
-              })
+              if (isAnimated) {
+                return renderAnimatedLine(
+                  containerHeightIncludingBelowXAxis,
+                  set.zIndex ?? zIndex1,
+                  pointsFromSet[index],
+                  widthValue,
+                  set.thickness ?? thickness1,
+                  set.color ?? color1,
+                  fillPointsFromSet[index],
+                  set.startFillColor ?? startFillColor1,
+                  set.endFillColor ?? endFillColor1,
+                  set.startOpacity ?? startOpacity1,
+                  set.endOpacity ?? endOpacity1,
+                  set.strokeDashArray ?? strokeDashArray1,
+                  set.strokeLinecap ?? strokeLinecap1,
+                  set.showArrow || props.showArrows,
+                  arrowPointsFromSet[index],
+                  arrowStrokeWidthsFromSet?.[index],
+                  arrowStrokeColorsFromSet?.[index],
+                  arrowFillColorsFromSet?.[index],
+                  set.hideDataPoints ?? hideDataPoints1,
+                  set.data,
+                  adjustToOffset(set.data, -(props.yAxisOffset ?? 0)), // need the actual values passed by user
+                  set.dataPointsShape ?? dataPointsShape1,
+                  set.dataPointsWidth ?? dataPointsWidth1,
+                  set.dataPointsHeight ?? dataPointsHeight1,
+                  set.dataPointsColor ?? dataPointsColor1,
+                  set.dataPointsRadius ?? dataPointsRadius1,
+                  set.textColor ?? textColor1,
+                  set.textFontSize ?? textFontSize1,
+                  set.startIndex ?? 0,
+                  set.endIndex ?? set.data.length - 1,
+                  set.isSecondary,
+                  showValuesAsDataPointsText,
+                  cumulativeSpacingForSet[index],
+                  index,
+                );
+              } else {
+                return renderLine(
+                  containerHeightIncludingBelowXAxis,
+                  set.zIndex ?? zIndex1,
+                  pointsFromSet[index],
+                  set.thickness ?? thickness1,
+                  set.color ?? color1,
+                  fillPointsFromSet[index],
+                  set.startFillColor ?? startFillColor1,
+                  set.endFillColor ?? endFillColor1,
+                  set.startOpacity ?? startOpacity1,
+                  set.endOpacity ?? endOpacity1,
+                  set.strokeDashArray ?? strokeDashArray1,
+                  set.strokeLinecap ?? strokeLinecap1,
+                  set.showArrow || props.showArrows,
+                  arrowPointsFromSet[index],
+                  arrowStrokeWidthsFromSet?.[index],
+                  arrowStrokeColorsFromSet?.[index],
+                  arrowFillColorsFromSet?.[index],
+                  set.hideDataPoints ?? hideDataPoints1,
+                  set.data,
+                  adjustToOffset(set.data, -(props.yAxisOffset ?? 0)), // need the actual values passed by user
+                  set.dataPointsShape ?? dataPointsShape1,
+                  set.dataPointsWidth ?? dataPointsWidth1,
+                  set.dataPointsHeight ?? dataPointsHeight1,
+                  set.dataPointsColor ?? dataPointsColor1,
+                  set.dataPointsRadius ?? dataPointsRadius1,
+                  set.textColor ?? textColor1,
+                  set.textFontSize ?? textFontSize1,
+                  set.startIndex ?? 0,
+                  set.endIndex ?? set.data.length - 1,
+                  set.isSecondary,
+                  showValuesAsDataPointsText,
+                  cumulativeSpacingForSet[index],
+                  index,
+                );
+              }
+            })
             : null
           : isAnimated
             ? renderAnimatedLine(
-                containerHeightIncludingBelowXAxis,
-                zIndex1,
-                points,
-                widthValue,
-                thickness1,
-                color1,
-                fillPoints,
-                startFillColor1,
-                endFillColor1,
-                startOpacity1,
-                endOpacity1,
-                strokeDashArray1,
-                strokeLinecap1,
-                props.showArrow1 || props.showArrows,
-                arrow1Points,
-                arrowStrokeWidth1,
-                arrowStrokeColor1,
-                arrowFillColor1,
-                hideDataPoints1,
-                data,
-                props.data,
-                dataPointsShape1,
-                dataPointsWidth1,
-                dataPointsHeight1,
-                dataPointsColor1,
-                dataPointsRadius1,
-                textColor1,
-                textFontSize1,
-                startIndex1,
-                endIndex1,
-                false,
-                showValuesAsDataPointsText,
-                cumulativeSpacing1,
-                0,
-              )
+              containerHeightIncludingBelowXAxis,
+              zIndex1,
+              points,
+              widthValue,
+              thickness1,
+              color1,
+              fillPoints,
+              startFillColor1,
+              endFillColor1,
+              startOpacity1,
+              endOpacity1,
+              strokeDashArray1,
+              strokeLinecap1,
+              props.showArrow1 || props.showArrows,
+              arrow1Points,
+              arrowStrokeWidth1,
+              arrowStrokeColor1,
+              arrowFillColor1,
+              hideDataPoints1,
+              data,
+              props.data,
+              dataPointsShape1,
+              dataPointsWidth1,
+              dataPointsHeight1,
+              dataPointsColor1,
+              dataPointsRadius1,
+              textColor1,
+              textFontSize1,
+              startIndex1,
+              endIndex1,
+              false,
+              showValuesAsDataPointsText,
+              cumulativeSpacing1,
+              0,
+            )
             : renderLine(
-                containerHeightIncludingBelowXAxis,
-                zIndex1,
-                points,
-                thickness1,
-                color1,
-                fillPoints,
-                startFillColor1,
-                endFillColor1,
-                startOpacity1,
-                endOpacity1,
-                strokeDashArray1,
-                strokeLinecap1,
-                props.showArrow1 || props.showArrows,
-                arrow1Points,
-                arrowStrokeWidth1,
-                arrowStrokeColor1,
-                arrowFillColor1,
-                hideDataPoints1,
-                data,
-                props.data,
-                dataPointsShape1,
-                dataPointsWidth1,
-                dataPointsHeight1,
-                dataPointsColor1,
-                dataPointsRadius1,
-                textColor1,
-                textFontSize1,
-                startIndex1,
-                endIndex1,
-                false,
-                showValuesAsDataPointsText,
-                cumulativeSpacing1,
-                0,
-              )}
+              containerHeightIncludingBelowXAxis,
+              zIndex1,
+              points,
+              thickness1,
+              color1,
+              fillPoints,
+              startFillColor1,
+              endFillColor1,
+              startOpacity1,
+              endOpacity1,
+              strokeDashArray1,
+              strokeLinecap1,
+              props.showArrow1 || props.showArrows,
+              arrow1Points,
+              arrowStrokeWidth1,
+              arrowStrokeColor1,
+              arrowFillColor1,
+              hideDataPoints1,
+              data,
+              props.data,
+              dataPointsShape1,
+              dataPointsWidth1,
+              dataPointsHeight1,
+              dataPointsColor1,
+              dataPointsRadius1,
+              textColor1,
+              textFontSize1,
+              startIndex1,
+              endIndex1,
+              false,
+              showValuesAsDataPointsText,
+              cumulativeSpacing1,
+              0,
+            )}
         {secondaryPoints
           ? isAnimated
             ? renderAnimatedLine(
-                containerHeightIncludingBelowXAxis,
-                secondaryLineConfig.zIndex,
-                secondaryPoints,
-                widthValue,
-                secondaryLineConfig.thickness,
-                secondaryLineConfig.color,
-                secondaryFillPoints,
-                secondaryLineConfig.startFillColor,
-                secondaryLineConfig.endFillColor,
-                secondaryLineConfig.startOpacity,
-                secondaryLineConfig.endOpacity,
-                secondaryLineConfig.strokeDashArray,
-                secondaryLineConfig.strokeLinecap,
-                secondaryLineConfig.showArrow,
-                secondaryArrowPoints,
-                secondaryLineConfig.arrowConfig?.strokeWidth,
-                secondaryLineConfig.arrowConfig?.strokeColor,
-                secondaryLineConfig.arrowConfig?.fillColor,
-                secondaryLineConfig.hideDataPoints,
-                secondaryData,
-                props.secondaryData,
-                secondaryLineConfig.dataPointsShape,
-                secondaryLineConfig.dataPointsWidth,
-                secondaryLineConfig.dataPointsHeight,
-                secondaryLineConfig.dataPointsColor,
-                secondaryLineConfig.dataPointsRadius,
-                secondaryLineConfig.textColor,
-                secondaryLineConfig.textFontSize,
-                secondaryLineConfig.startIndex,
-                secondaryLineConfig.endIndex,
-                true,
-                secondaryLineConfig.showValuesAsDataPointsText,
-                cumulativeSpacingSecondary,
-                6666,
-              )
+              containerHeightIncludingBelowXAxis,
+              secondaryLineConfig.zIndex,
+              secondaryPoints,
+              widthValue,
+              secondaryLineConfig.thickness,
+              secondaryLineConfig.color,
+              secondaryFillPoints,
+              secondaryLineConfig.startFillColor,
+              secondaryLineConfig.endFillColor,
+              secondaryLineConfig.startOpacity,
+              secondaryLineConfig.endOpacity,
+              secondaryLineConfig.strokeDashArray,
+              secondaryLineConfig.strokeLinecap,
+              secondaryLineConfig.showArrow,
+              secondaryArrowPoints,
+              secondaryLineConfig.arrowConfig?.strokeWidth,
+              secondaryLineConfig.arrowConfig?.strokeColor,
+              secondaryLineConfig.arrowConfig?.fillColor,
+              secondaryLineConfig.hideDataPoints,
+              secondaryData,
+              props.secondaryData,
+              secondaryLineConfig.dataPointsShape,
+              secondaryLineConfig.dataPointsWidth,
+              secondaryLineConfig.dataPointsHeight,
+              secondaryLineConfig.dataPointsColor,
+              secondaryLineConfig.dataPointsRadius,
+              secondaryLineConfig.textColor,
+              secondaryLineConfig.textFontSize,
+              secondaryLineConfig.startIndex,
+              secondaryLineConfig.endIndex,
+              true,
+              secondaryLineConfig.showValuesAsDataPointsText,
+              cumulativeSpacingSecondary,
+              6666,
+            )
             : renderLine(
-                containerHeightIncludingBelowXAxis,
-                secondaryLineConfig.zIndex,
-                secondaryPoints,
-                secondaryLineConfig.thickness,
-                secondaryLineConfig.color,
-                secondaryFillPoints,
-                secondaryLineConfig.startFillColor,
-                secondaryLineConfig.endFillColor,
-                secondaryLineConfig.startOpacity,
-                secondaryLineConfig.endOpacity,
-                secondaryLineConfig.strokeDashArray,
-                secondaryLineConfig.strokeLinecap,
-                secondaryLineConfig.showArrow,
-                secondaryArrowPoints,
-                secondaryLineConfig.arrowConfig?.strokeWidth,
-                secondaryLineConfig.arrowConfig?.strokeColor,
-                secondaryLineConfig.arrowConfig?.fillColor,
-                secondaryLineConfig.hideDataPoints,
-                secondaryData,
-                props.secondaryData,
-                secondaryLineConfig.dataPointsShape,
-                secondaryLineConfig.dataPointsWidth,
-                secondaryLineConfig.dataPointsHeight,
-                secondaryLineConfig.dataPointsColor,
-                secondaryLineConfig.dataPointsRadius,
-                secondaryLineConfig.textColor,
-                secondaryLineConfig.textFontSize,
-                secondaryLineConfig.startIndex,
-                secondaryLineConfig.endIndex,
-                true,
-                secondaryLineConfig.showValuesAsDataPointsText,
-                cumulativeSpacingSecondary,
-                6666,
-              )
+              containerHeightIncludingBelowXAxis,
+              secondaryLineConfig.zIndex,
+              secondaryPoints,
+              secondaryLineConfig.thickness,
+              secondaryLineConfig.color,
+              secondaryFillPoints,
+              secondaryLineConfig.startFillColor,
+              secondaryLineConfig.endFillColor,
+              secondaryLineConfig.startOpacity,
+              secondaryLineConfig.endOpacity,
+              secondaryLineConfig.strokeDashArray,
+              secondaryLineConfig.strokeLinecap,
+              secondaryLineConfig.showArrow,
+              secondaryArrowPoints,
+              secondaryLineConfig.arrowConfig?.strokeWidth,
+              secondaryLineConfig.arrowConfig?.strokeColor,
+              secondaryLineConfig.arrowConfig?.fillColor,
+              secondaryLineConfig.hideDataPoints,
+              secondaryData,
+              props.secondaryData,
+              secondaryLineConfig.dataPointsShape,
+              secondaryLineConfig.dataPointsWidth,
+              secondaryLineConfig.dataPointsHeight,
+              secondaryLineConfig.dataPointsColor,
+              secondaryLineConfig.dataPointsRadius,
+              secondaryLineConfig.textColor,
+              secondaryLineConfig.textFontSize,
+              secondaryLineConfig.startIndex,
+              secondaryLineConfig.endIndex,
+              true,
+              secondaryLineConfig.showValuesAsDataPointsText,
+              cumulativeSpacingSecondary,
+              6666,
+            )
           : null}
         {points2
           ? isAnimated
             ? renderAnimatedLine(
-                containerHeightIncludingBelowXAxis,
-                zIndex2,
-                points2,
-                widthValue2,
-                thickness2,
-                color2,
-                fillPoints2,
-                startFillColor2,
-                endFillColor2,
-                startOpacity2,
-                endOpacity2,
-                strokeDashArray2,
-                strokeLinecap2,
-                props.showArrow2 || props.showArrows,
-                arrow2Points,
-                arrowStrokeWidth2,
-                arrowStrokeColor2,
-                arrowFillColor2,
-                hideDataPoints2,
-                data2,
-                props.data2,
-                dataPointsShape2,
-                dataPointsWidth2,
-                dataPointsHeight2,
-                dataPointsColor2,
-                dataPointsRadius2,
-                textColor2,
-                textFontSize2,
-                startIndex2,
-                endIndex2,
-                false,
-                showValuesAsDataPointsText,
-                cumulativeSpacing2,
-                1,
-              )
+              containerHeightIncludingBelowXAxis,
+              zIndex2,
+              points2,
+              widthValue2,
+              thickness2,
+              color2,
+              fillPoints2,
+              startFillColor2,
+              endFillColor2,
+              startOpacity2,
+              endOpacity2,
+              strokeDashArray2,
+              strokeLinecap2,
+              props.showArrow2 || props.showArrows,
+              arrow2Points,
+              arrowStrokeWidth2,
+              arrowStrokeColor2,
+              arrowFillColor2,
+              hideDataPoints2,
+              data2,
+              props.data2,
+              dataPointsShape2,
+              dataPointsWidth2,
+              dataPointsHeight2,
+              dataPointsColor2,
+              dataPointsRadius2,
+              textColor2,
+              textFontSize2,
+              startIndex2,
+              endIndex2,
+              false,
+              showValuesAsDataPointsText,
+              cumulativeSpacing2,
+              1,
+            )
             : renderLine(
-                containerHeightIncludingBelowXAxis,
-                zIndex2,
-                points2,
-                thickness2,
-                color2,
-                fillPoints2,
-                startFillColor2,
-                endFillColor2,
-                startOpacity2,
-                endOpacity2,
-                strokeDashArray2,
-                strokeLinecap2,
-                props.showArrow2 || props.showArrows,
-                arrow2Points,
-                arrowStrokeWidth2,
-                arrowStrokeColor2,
-                arrowFillColor2,
-                hideDataPoints2,
-                data2,
-                props.data2,
-                dataPointsShape2,
-                dataPointsWidth2,
-                dataPointsHeight2,
-                dataPointsColor2,
-                dataPointsRadius2,
-                textColor2,
-                textFontSize2,
-                startIndex2,
-                endIndex2,
-                false,
-                showValuesAsDataPointsText,
-                cumulativeSpacing2,
-                1,
-              )
+              containerHeightIncludingBelowXAxis,
+              zIndex2,
+              points2,
+              thickness2,
+              color2,
+              fillPoints2,
+              startFillColor2,
+              endFillColor2,
+              startOpacity2,
+              endOpacity2,
+              strokeDashArray2,
+              strokeLinecap2,
+              props.showArrow2 || props.showArrows,
+              arrow2Points,
+              arrowStrokeWidth2,
+              arrowStrokeColor2,
+              arrowFillColor2,
+              hideDataPoints2,
+              data2,
+              props.data2,
+              dataPointsShape2,
+              dataPointsWidth2,
+              dataPointsHeight2,
+              dataPointsColor2,
+              dataPointsRadius2,
+              textColor2,
+              textFontSize2,
+              startIndex2,
+              endIndex2,
+              false,
+              showValuesAsDataPointsText,
+              cumulativeSpacing2,
+              1,
+            )
           : null}
         {points3
           ? isAnimated
             ? renderAnimatedLine(
-                containerHeightIncludingBelowXAxis,
-                zIndex3,
-                points3,
-                widthValue3,
-                thickness3,
-                color3,
-                fillPoints3,
-                startFillColor3,
-                endFillColor3,
-                startOpacity3,
-                endOpacity3,
-                strokeDashArray3,
-                strokeLinecap3,
-                props.showArrow3 || props.showArrows,
-                arrow3Points,
-                arrowStrokeWidth3,
-                arrowStrokeColor3,
-                arrowFillColor3,
-                hideDataPoints3,
-                data3,
-                props.data3,
-                dataPointsShape3,
-                dataPointsWidth3,
-                dataPointsHeight3,
-                dataPointsColor3,
-                dataPointsRadius3,
-                textColor3,
-                textFontSize3,
-                startIndex3,
-                endIndex3,
-                false,
-                showValuesAsDataPointsText,
-                cumulativeSpacing3,
-                2,
-              )
+              containerHeightIncludingBelowXAxis,
+              zIndex3,
+              points3,
+              widthValue3,
+              thickness3,
+              color3,
+              fillPoints3,
+              startFillColor3,
+              endFillColor3,
+              startOpacity3,
+              endOpacity3,
+              strokeDashArray3,
+              strokeLinecap3,
+              props.showArrow3 || props.showArrows,
+              arrow3Points,
+              arrowStrokeWidth3,
+              arrowStrokeColor3,
+              arrowFillColor3,
+              hideDataPoints3,
+              data3,
+              props.data3,
+              dataPointsShape3,
+              dataPointsWidth3,
+              dataPointsHeight3,
+              dataPointsColor3,
+              dataPointsRadius3,
+              textColor3,
+              textFontSize3,
+              startIndex3,
+              endIndex3,
+              false,
+              showValuesAsDataPointsText,
+              cumulativeSpacing3,
+              2,
+            )
             : renderLine(
-                containerHeightIncludingBelowXAxis,
-                zIndex3,
-                points3,
-                thickness3,
-                color3,
-                fillPoints3,
-                startFillColor3,
-                endFillColor3,
-                startOpacity3,
-                endOpacity3,
-                strokeDashArray3,
-                strokeLinecap3,
-                props.showArrow3 || props.showArrows,
-                arrow3Points,
-                arrowStrokeWidth3,
-                arrowStrokeColor3,
-                arrowFillColor3,
-                hideDataPoints3,
-                data3,
-                props.data3,
-                dataPointsShape3,
-                dataPointsWidth3,
-                dataPointsHeight3,
-                dataPointsColor3,
-                dataPointsRadius3,
-                textColor3,
-                textFontSize3,
-                startIndex3,
-                endIndex3,
-                false,
-                showValuesAsDataPointsText,
-                cumulativeSpacing3,
-                2,
-              )
+              containerHeightIncludingBelowXAxis,
+              zIndex3,
+              points3,
+              thickness3,
+              color3,
+              fillPoints3,
+              startFillColor3,
+              endFillColor3,
+              startOpacity3,
+              endOpacity3,
+              strokeDashArray3,
+              strokeLinecap3,
+              props.showArrow3 || props.showArrows,
+              arrow3Points,
+              arrowStrokeWidth3,
+              arrowStrokeColor3,
+              arrowFillColor3,
+              hideDataPoints3,
+              data3,
+              props.data3,
+              dataPointsShape3,
+              dataPointsWidth3,
+              dataPointsHeight3,
+              dataPointsColor3,
+              dataPointsRadius3,
+              textColor3,
+              textFontSize3,
+              startIndex3,
+              endIndex3,
+              false,
+              showValuesAsDataPointsText,
+              cumulativeSpacing3,
+              2,
+            )
           : null}
         {points4
           ? isAnimated
             ? renderAnimatedLine(
-                containerHeightIncludingBelowXAxis,
-                zIndex4,
-                points4,
-                widthValue4,
-                thickness4,
-                color4,
-                fillPoints4,
-                startFillColor4,
-                endFillColor4,
-                startOpacity4,
-                endOpacity4,
-                strokeDashArray4,
-                strokeLinecap4,
-                props.showArrow4 || props.showArrows,
-                arrow4Points,
-                arrowStrokeWidth4,
-                arrowStrokeColor4,
-                arrowFillColor4,
-                hideDataPoints4,
-                data4,
-                props.data4,
-                dataPointsShape4,
-                dataPointsWidth4,
-                dataPointsHeight4,
-                dataPointsColor4,
-                dataPointsRadius4,
-                textColor4,
-                textFontSize4,
-                startIndex4,
-                endIndex4,
-                false,
-                showValuesAsDataPointsText,
-                cumulativeSpacing4,
-                3,
-              )
+              containerHeightIncludingBelowXAxis,
+              zIndex4,
+              points4,
+              widthValue4,
+              thickness4,
+              color4,
+              fillPoints4,
+              startFillColor4,
+              endFillColor4,
+              startOpacity4,
+              endOpacity4,
+              strokeDashArray4,
+              strokeLinecap4,
+              props.showArrow4 || props.showArrows,
+              arrow4Points,
+              arrowStrokeWidth4,
+              arrowStrokeColor4,
+              arrowFillColor4,
+              hideDataPoints4,
+              data4,
+              props.data4,
+              dataPointsShape4,
+              dataPointsWidth4,
+              dataPointsHeight4,
+              dataPointsColor4,
+              dataPointsRadius4,
+              textColor4,
+              textFontSize4,
+              startIndex4,
+              endIndex4,
+              false,
+              showValuesAsDataPointsText,
+              cumulativeSpacing4,
+              3,
+            )
             : renderLine(
-                containerHeightIncludingBelowXAxis,
-                zIndex4,
-                points4,
-                thickness4,
-                color4,
-                fillPoints4,
-                startFillColor4,
-                endFillColor4,
-                startOpacity4,
-                endOpacity4,
-                strokeDashArray4,
-                strokeLinecap4,
-                props.showArrow4 || props.showArrows,
-                arrow4Points,
-                arrowStrokeWidth4,
-                arrowStrokeColor4,
-                arrowFillColor4,
-                hideDataPoints4,
-                data4,
-                props.data4,
-                dataPointsShape4,
-                dataPointsWidth4,
-                dataPointsHeight4,
-                dataPointsColor4,
-                dataPointsRadius4,
-                textColor4,
-                textFontSize4,
-                startIndex4,
-                endIndex4,
-                false,
-                showValuesAsDataPointsText,
-                cumulativeSpacing4,
-                3,
-              )
+              containerHeightIncludingBelowXAxis,
+              zIndex4,
+              points4,
+              thickness4,
+              color4,
+              fillPoints4,
+              startFillColor4,
+              endFillColor4,
+              startOpacity4,
+              endOpacity4,
+              strokeDashArray4,
+              strokeLinecap4,
+              props.showArrow4 || props.showArrows,
+              arrow4Points,
+              arrowStrokeWidth4,
+              arrowStrokeColor4,
+              arrowFillColor4,
+              hideDataPoints4,
+              data4,
+              props.data4,
+              dataPointsShape4,
+              dataPointsWidth4,
+              dataPointsHeight4,
+              dataPointsColor4,
+              dataPointsRadius4,
+              textColor4,
+              textFontSize4,
+              startIndex4,
+              endIndex4,
+              false,
+              showValuesAsDataPointsText,
+              cumulativeSpacing4,
+              3,
+            )
           : null}
         {points5
           ? isAnimated
             ? renderAnimatedLine(
-                containerHeightIncludingBelowXAxis,
-                zIndex5,
-                points5,
-                widthValue5,
-                thickness5,
-                color5,
-                fillPoints5,
-                startFillColor5,
-                endFillColor5,
-                startOpacity5,
-                endOpacity5,
-                strokeDashArray5,
-                strokeLinecap5,
-                props.showArrow5 || props.showArrows,
-                arrow5Points,
-                arrowStrokeWidth5,
-                arrowStrokeColor5,
-                arrowFillColor5,
-                hideDataPoints5,
-                data5,
-                props.data5,
-                dataPointsShape5,
-                dataPointsWidth5,
-                dataPointsHeight5,
-                dataPointsColor5,
-                dataPointsRadius5,
-                textColor5,
-                textFontSize5,
-                startIndex5,
-                endIndex5,
-                false,
-                showValuesAsDataPointsText,
-                cumulativeSpacing5,
-                4,
-              )
+              containerHeightIncludingBelowXAxis,
+              zIndex5,
+              points5,
+              widthValue5,
+              thickness5,
+              color5,
+              fillPoints5,
+              startFillColor5,
+              endFillColor5,
+              startOpacity5,
+              endOpacity5,
+              strokeDashArray5,
+              strokeLinecap5,
+              props.showArrow5 || props.showArrows,
+              arrow5Points,
+              arrowStrokeWidth5,
+              arrowStrokeColor5,
+              arrowFillColor5,
+              hideDataPoints5,
+              data5,
+              props.data5,
+              dataPointsShape5,
+              dataPointsWidth5,
+              dataPointsHeight5,
+              dataPointsColor5,
+              dataPointsRadius5,
+              textColor5,
+              textFontSize5,
+              startIndex5,
+              endIndex5,
+              false,
+              showValuesAsDataPointsText,
+              cumulativeSpacing5,
+              4,
+            )
             : renderLine(
-                containerHeightIncludingBelowXAxis,
-                zIndex5,
-                points5,
-                thickness5,
-                color5,
-                fillPoints5,
-                startFillColor5,
-                endFillColor5,
-                startOpacity5,
-                endOpacity5,
-                strokeDashArray5,
-                strokeLinecap5,
-                props.showArrow5 || props.showArrows,
-                arrow5Points,
-                arrowStrokeWidth5,
-                arrowStrokeColor5,
-                arrowFillColor5,
-                hideDataPoints5,
-                data5,
-                props.data5,
-                dataPointsShape5,
-                dataPointsWidth5,
-                dataPointsHeight5,
-                dataPointsColor5,
-                dataPointsRadius5,
-                textColor5,
-                textFontSize5,
-                startIndex5,
-                endIndex5,
-                false,
-                showValuesAsDataPointsText,
-                cumulativeSpacing5,
-                4,
-              )
+              containerHeightIncludingBelowXAxis,
+              zIndex5,
+              points5,
+              thickness5,
+              color5,
+              fillPoints5,
+              startFillColor5,
+              endFillColor5,
+              startOpacity5,
+              endOpacity5,
+              strokeDashArray5,
+              strokeLinecap5,
+              props.showArrow5 || props.showArrows,
+              arrow5Points,
+              arrowStrokeWidth5,
+              arrowStrokeColor5,
+              arrowFillColor5,
+              hideDataPoints5,
+              data5,
+              props.data5,
+              dataPointsShape5,
+              dataPointsWidth5,
+              dataPointsHeight5,
+              dataPointsColor5,
+              dataPointsRadius5,
+              textColor5,
+              textFontSize5,
+              startIndex5,
+              endIndex5,
+              false,
+              showValuesAsDataPointsText,
+              cumulativeSpacing5,
+              4,
+            )
           : null}
         {intersectionAreaConfig &&
-        (props.areaChart || (props.areaChart1 && props.areaChart2))
+          (props.areaChart || (props.areaChart1 && props.areaChart2))
           ? renderIntersection()
           : null}
         {pointerX > 0 ? (
@@ -2826,41 +2866,41 @@ export const LineChart = (props: LineChartPropsType) => {
             <View key={index}>
               {isAnimated
                 ? renderAnimatedLabel(
-                    false,
-                    index,
-                    item.label ||
-                      (props.xAxisLabelTexts && props.xAxisLabelTexts[index]
-                        ? props.xAxisLabelTexts[index]
-                        : ''),
-                    item.labelTextStyle || props.xAxisLabelTextStyle,
-                    item.labelComponent,
-                  )
+                  false,
+                  index,
+                  item.label ||
+                  (props.xAxisLabelTexts && props.xAxisLabelTexts[index]
+                    ? props.xAxisLabelTexts[index]
+                    : ''),
+                  item.labelTextStyle || props.xAxisLabelTextStyle,
+                  item.labelComponent,
+                )
                 : renderLabel(
-                    false,
-                    index,
-                    item.label ||
-                      (props.xAxisLabelTexts && props.xAxisLabelTexts[index]
-                        ? props.xAxisLabelTexts[index]
-                        : ''),
-                    item.labelTextStyle || props.xAxisLabelTextStyle,
-                    item.labelComponent,
-                  )}
+                  false,
+                  index,
+                  item.label ||
+                  (props.xAxisLabelTexts && props.xAxisLabelTexts[index]
+                    ? props.xAxisLabelTexts[index]
+                    : ''),
+                  item.labelTextStyle || props.xAxisLabelTextStyle,
+                  item.labelComponent,
+                )}
               {secondaryXAxis
                 ? isAnimated
                   ? renderAnimatedLabel(
-                      true,
-                      index,
-                      secondaryLabel,
-                      secondaryLabelTextStyle,
-                      item.secondaryLabelComponent,
-                    )
+                    true,
+                    index,
+                    secondaryLabel,
+                    secondaryLabelTextStyle,
+                    item.secondaryLabelComponent,
+                  )
                   : renderLabel(
-                      true,
-                      index,
-                      secondaryLabel,
-                      secondaryLabelTextStyle,
-                      item.secondaryLabelComponent,
-                    )
+                    true,
+                    index,
+                    secondaryLabel,
+                    secondaryLabelTextStyle,
+                    item.secondaryLabelComponent,
+                  )
                 : null}
             </View>
           );
@@ -2868,7 +2908,7 @@ export const LineChart = (props: LineChartPropsType) => {
         {pointerConfig?.dynamicLegendComponent && pointerX > 0 ? (
           <View
             style={[
-              {position: 'absolute'},
+              { position: 'absolute' },
               pointerConfig.dynamicLegendContainerStyle,
             ]}>
             {pointerConfig.dynamicLegendComponent(
