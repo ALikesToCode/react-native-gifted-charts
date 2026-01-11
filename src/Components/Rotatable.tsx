@@ -26,13 +26,13 @@ function createSmoothUpdater(
   const frameDelay = 1000 / fps;
   let lastTime = 0;
   let filtered = 0; // low-pass output
-  let timeout: any = null;
+  let timeout: ReturnType<typeof setTimeout> | null = null;
 
-  return (target: number) => {
+  const update = (target: number) => {
     const now = Date.now();
     const diff = now - lastTime;
 
-    const update = () => {
+    const applyUpdate = () => {
       // low-pass filter (natural smoothing)
       filtered = filtered * (1 - smoothing) + target * smoothing;
       animatedValue.setValue(filtered);
@@ -40,15 +40,26 @@ function createSmoothUpdater(
 
     if (diff >= frameDelay) {
       lastTime = now;
-      update();
+      applyUpdate();
     } else {
-      clearTimeout(timeout);
+      if (timeout) {
+        clearTimeout(timeout);
+      }
       timeout = setTimeout(() => {
         lastTime = Date.now();
-        update();
+        applyUpdate();
       }, frameDelay - diff);
     }
   };
+
+  return Object.assign(update, {
+    cancel: () => {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+    },
+  });
 }
 
 export function RotatablePie({
@@ -76,6 +87,12 @@ export function RotatablePie({
     const id = angle.addListener(({value}) => onAngleChange?.(value));
     return () => angle.removeListener(id);
   }, [angle, onAngleChange]);
+
+  useEffect(() => {
+    return () => {
+      smoothSetAngle.cancel();
+    };
+  }, [smoothSetAngle]);
 
   const onLayout = (e: LayoutChangeEvent) => {
     const {width, height} = e.nativeEvent.layout;

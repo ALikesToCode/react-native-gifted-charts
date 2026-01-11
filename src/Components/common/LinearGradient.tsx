@@ -1,11 +1,12 @@
 import React from 'react';
+import {StyleProp, ViewStyle} from 'react-native';
 
 type LinearGradientProps = {
-  style?: any;
+  style?: StyleProp<ViewStyle>;
   start?: {x: number; y: number};
   end?: {x: number; y: number};
   colors: string[];
-  children?: any;
+  children?: React.ReactNode;
 };
 
 let LinearGradient: React.FC<LinearGradientProps>;

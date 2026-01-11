@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { Pressable, View } from 'react-native';
+import {
+  GestureResponderEvent,
+  LayoutChangeEvent,
+  Pressable,
+  View,
+} from 'react-native';
 import Svg, {
   Path,
   Circle,
@@ -77,16 +82,25 @@ export const PieChartMain = (props: PieChartMainProps) => {
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
 
-  const onPressHandler = (e: any) => {
-    let x = 0,
-      y = 0;
-    if (isWebApp) {
-      x = e.clientX - left;
-      y = e.clientY - top;
-    } else {
-      x = e.nativeEvent.locationX;
-      y = e.nativeEvent.locationY;
+  type WebPressEvent = {
+    clientX: number;
+    clientY: number;
+    nativeEvent?: { locationX: number; locationY: number };
+  };
+
+  const getPressCoordinates = (e: GestureResponderEvent | WebPressEvent) => {
+    if (isWebApp && 'clientX' in e) {
+      return { x: e.clientX - left, y: e.clientY - top };
     }
+
+    return {
+      x: e.nativeEvent?.locationX ?? 0,
+      y: e.nativeEvent?.locationY ?? 0,
+    };
+  };
+
+  const onPressHandler = (e: GestureResponderEvent | WebPressEvent) => {
+    let { x, y } = getPressCoordinates(e);
     x -= extraRadius;
     y -= extraRadius;
     setTouchX(x);
@@ -122,10 +136,10 @@ export const PieChartMain = (props: PieChartMainProps) => {
       pointerEvents={isBiggerPie && !edgesPressable ? 'none' : 'auto'}>
       <View
         pointerEvents="box-only"
-        onLayout={(e: any) => {
+        onLayout={(e: LayoutChangeEvent) => {
           if (!isWebApp) return;
-          setTop(e.nativeEvent.layout.top);
-          setLeft(e.nativeEvent.layout.left);
+          setTop(e.nativeEvent.layout.y);
+          setLeft(e.nativeEvent.layout.x);
         }}
         style={[
           {

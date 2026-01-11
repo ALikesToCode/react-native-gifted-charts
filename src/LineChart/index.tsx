@@ -7,6 +7,8 @@ import {
   Dimensions,
   ColorValue,
   I18nManager,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   ViewStyle,
 } from 'react-native';
 import { isWebApp, screenWidth, usePrevious } from '../utils';
@@ -2193,7 +2195,7 @@ export const LineChart = (props: LineChartPropsType) => {
   };
 
   const remainingScrollViewProps = {
-    onScroll: (ev: any) => {
+    onScroll: (ev: NativeSyntheticEvent<NativeScrollEvent>) => {
       props.onScroll?.(ev);
       if (
         pointerConfig &&

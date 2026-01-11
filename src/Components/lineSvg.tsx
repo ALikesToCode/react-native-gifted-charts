@@ -6,7 +6,7 @@ import {ruleTypes} from 'gifted-charts-core';
 type ruleProps = {
   thickness: number;
   width: number;
-  color: ColorValue | string | any;
+  color: ColorValue;
   type: string;
   dashWidth: number;
   dashGap: number;

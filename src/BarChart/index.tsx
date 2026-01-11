@@ -2,7 +2,10 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import {
   Animated,
   Easing,
+  GestureResponderEvent,
   I18nManager,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   Pressable,
   View,
   ViewStyle,
@@ -27,8 +30,9 @@ export const BarChart = (props: BarChartPropsType) => {
 
   const scrollRef = props.scrollRef ?? useRef(null);
   const remainingScrollViewProps = {
-    onScroll: (ev: any) => props.onScroll?.(ev),
-    onTouchStart: (evt: any) => {
+    onScroll: (ev: NativeSyntheticEvent<NativeScrollEvent>) =>
+      props.onScroll?.(ev),
+    onTouchStart: (_evt: GestureResponderEvent) => {
       if (props.renderTooltip) {
         setSelectedIndex([-1]);
       }

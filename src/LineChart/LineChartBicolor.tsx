@@ -1,5 +1,12 @@
 import React, {Fragment, useCallback, useEffect, useMemo, useRef} from 'react';
-import {View, Animated, Easing, Text} from 'react-native';
+import {
+  View,
+  Animated,
+  Easing,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  Text,
+} from 'react-native';
 import {styles} from './styles';
 import Svg, {
   Path,
@@ -741,7 +748,8 @@ export const LineChartBicolor = (props: LineChartBicolorPropsType) => {
       animatedWidth={animatedWidth}
       renderChartContent={renderChartContent}
       remainingScrollViewProps={{
-        onScroll: (ev: any) => props.onScroll?.(ev),
+        onScroll: (ev: NativeSyntheticEvent<NativeScrollEvent>) =>
+          props.onScroll?.(ev),
         bounces: props.bounces,
         overScrollMode: props.overScrollMode ?? 'auto',
       }}
