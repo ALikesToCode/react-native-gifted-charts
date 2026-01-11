@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Pressable, View} from 'react-native';
+import React, { useState } from 'react';
+import { Pressable, View } from 'react-native';
 import Svg, {
   Path,
   Circle,
@@ -15,7 +15,7 @@ import {
   PieChartMainProps,
   pieColors,
 } from 'gifted-charts-core';
-import {isWebApp, rnVersion} from '../utils';
+import { isWebApp, rnVersion } from '../utils';
 
 export const PieChartMain = (props: PieChartMainProps) => {
   const {
@@ -68,7 +68,7 @@ export const PieChartMain = (props: PieChartMainProps) => {
     edgesPressable,
   } = getPieChartMainProps(props);
 
-  const {setTouchX, setTouchY} = props;
+  const { setTouchX, setTouchY } = props;
 
   let prevSide = 'right';
   let prevLabelComponentX = 0;
@@ -97,7 +97,7 @@ export const PieChartMain = (props: PieChartMainProps) => {
 
     for (let index = 0; index < data.length; index++) {
       const angle = coordinates[index];
-      const {sx, sy, ax, ay} = angle;
+      const { sx, sy, ax, ay } = angle;
 
       const startAngle = Math.atan2(sy - cy, sx - cx);
       const endAngle = Math.atan2(ay - cy, ax - cx);
@@ -136,23 +136,20 @@ export const PieChartMain = (props: PieChartMainProps) => {
             width: canvasWidth + paddingHorizontal + extraRadius * 2,
             overflow: 'hidden',
           },
-          isThreeD && {transform: [{rotateX: tiltAngle}]},
+          isThreeD && { transform: [{ rotateX: tiltAngle }] },
         ]}>
         <Svg
           pointerEvents={rnVersion >= 720000 ? 'box-none' : 'auto'} // use 'box-none' react-native version 0.72 onwards
-          viewBox={`${strokeWidth / -2 + minShiftX - extraRadius - paddingHorizontal / 2} ${
-            strokeWidth / -2 + minShiftY - extraRadius - paddingVertical / 2
-          } ${
-            (radius + extraRadius + strokeWidth) * 2 +
+          viewBox={`${strokeWidth / -2 + minShiftX - extraRadius - paddingHorizontal / 2} ${strokeWidth / -2 + minShiftY - extraRadius - paddingVertical / 2
+            } ${(radius + extraRadius + strokeWidth) * 2 +
             paddingHorizontal +
             horizAdjustment +
             (horizAdjustment ? strokeWidth : 0)
-          } ${
-            (radius + extraRadius + strokeWidth) * 2 +
+            } ${(radius + extraRadius + strokeWidth) * 2 +
             paddingVertical +
             vertAdjustment +
             (vertAdjustment ? strokeWidth : 0)
-          }`}
+            }`}
           height={(radius + extraRadius) * 2 + strokeWidth + paddingVertical}
           width={(radius + extraRadius) * 2 + strokeWidth + paddingHorizontal}>
           <Defs>
@@ -197,18 +194,56 @@ export const PieChartMain = (props: PieChartMainProps) => {
             </>
           ) : (
             data.map((item, index) => {
-              const {sx, sy, ax, ay} = coordinates[index];
+              const { sx, sy, ax, ay } = coordinates[index];
               if (isBiggerPie && index) return null;
+
+              // @ts-ignore
+              const roundedCorners = props.roundedCorners || item.roundedCorners;
+
+              if (roundedCorners && innerRadius) {
+                const midRadius = (radius + innerRadius) / 2;
+                const arcStrokeWidth = radius - innerRadius;
+
+                // Recover angles
+                let startAngle = Math.atan2(sy - cy, sx - cx);
+                let endAngle = Math.atan2(ay - cy, ax - cx);
+
+                // Handle wrap-around cases for generic drawing
+                if (Math.abs(endAngle - startAngle) > Math.PI) {
+                  // Adjust if crossing -PI/PI boundary? 
+                  // Actually, for SVG arc, we just need start/end points.
+                  // But we re-calculate points based on midRadius.
+                }
+
+                const sx_ = cx + midRadius * Math.cos(startAngle);
+                const sy_ = cy + midRadius * Math.sin(startAngle);
+                const ax_ = cx + midRadius * Math.cos(endAngle);
+                const ay_ = cy + midRadius * Math.sin(endAngle);
+
+                return (
+                  <Path
+                    key={index + 'r'}
+                    d={`M ${sx_} ${sy_} A ${midRadius} ${midRadius} 0 ${data[index].value > total / 2 ? 1 : 0
+                      } 1 ${ax_} ${ay_}`}
+                    stroke={
+                      showGradient
+                        ? `url(#grad${index})`
+                        : item.color || pieColors[isBiggerPie ? props.selectedIndex ?? 0 % 9 : index % 9]
+                    }
+                    strokeWidth={arcStrokeWidth}
+                    fill="none"
+                    strokeLinecap="round"
+                  />
+                );
+              }
+
               return (
                 <Path
                   key={index + 'a'}
-                  d={`M ${cx + (item.shiftX || 0)} ${
-                    cy + (item.shiftY || 0)
-                  } L ${sx} ${sy} A ${radius} ${radius} 0 ${
-                    semiCircle ? 0 : data[index].value > total / 2 ? 1 : 0
-                  } 1 ${ax} ${ay} L ${cx + (item.shiftX || 0)} ${
-                    cy + (item.shiftY || 0)
-                  }`}
+                  d={`M ${cx + (item.shiftX || 0)} ${cy + (item.shiftY || 0)
+                    } L ${sx} ${sy} A ${radius} ${radius} 0 ${semiCircle ? 0 : data[index].value > total / 2 ? 1 : 0
+                    } 1 ${ax} ${ay} L ${cx + (item.shiftX || 0)} ${cy + (item.shiftY || 0)
+                    }`}
                   stroke={item.strokeColor || strokeColor}
                   strokeWidth={
                     props.focusOnPress && props.selectedIndex === index

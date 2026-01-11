@@ -1,11 +1,15 @@
-import {View, Text, TextStyle} from 'react-native';
-import {PieChartMain} from './main';
-import {PieChartPropsType, pieColors, usePieChart} from 'gifted-charts-core';
-import {isWebApp} from '../utils';
-import {useState} from 'react';
-import {RotatablePie} from '../Components/Rotatable';
+import { View, Text, TextStyle } from 'react-native';
+import { PieChartMain } from './main';
+import { PieChartPropsType, pieColors, usePieChart } from 'gifted-charts-core';
+import { isWebApp } from '../utils';
+import { useState } from 'react';
+import { RotatablePie } from '../Components/Rotatable';
 
-export const PieChart = (props: PieChartPropsType) => {
+export interface PieChartProps extends PieChartPropsType {
+  roundedCorners?: boolean;
+}
+
+export const PieChart = (props: PieChartProps) => {
   if (!props.data) return null;
   const {
     radius,
@@ -91,22 +95,22 @@ export const PieChart = (props: PieChartPropsType) => {
               borderLeftWidth: shiftInnerCenterX
                 ? innerCircleBorderWidth * 2
                 : innerCircleBorderWidth,
-              transform: [{rotateX: tiltAngle}],
+              transform: [{ rotateX: tiltAngle }],
             },
             semiCircle &&
-              isThreeD && {
-                borderTopWidth: isThreeD
-                  ? innerCircleBorderWidth * 5
-                  : innerCircleBorderWidth,
-                borderLeftWidth: 0.5,
-                borderLeftColor: innerCircleColor,
-                borderBottomWidth: 0,
-                borderRightWidth: 0.5,
-                borderRightColor: innerCircleColor,
-              },
+            isThreeD && {
+              borderTopWidth: isThreeD
+                ? innerCircleBorderWidth * 5
+                : innerCircleBorderWidth,
+              borderLeftWidth: 0.5,
+              borderLeftColor: innerCircleColor,
+              borderBottomWidth: 0,
+              borderRightWidth: 0.5,
+              borderRightColor: innerCircleColor,
+            },
           ]}
           pointerEvents="box-none">
-          <View style={{marginTop: semiCircle ? -0.5 * innerRadius : 0}}>
+          <View style={{ marginTop: semiCircle ? -0.5 * innerRadius : 0 }}>
             {props.centerLabelComponent?.(selectedIndex) ?? null}
           </View>
         </View>
@@ -125,8 +129,8 @@ export const PieChart = (props: PieChartPropsType) => {
               ? props.tooltipHorizontalShift
                 ? touchX - tooltipHorizontalShift
                 : touchX -
-                  (tooltipWidth ??
-                    getTooltipText(tooltipSelectedIndex).length * 10)
+                (tooltipWidth ??
+                  getTooltipText(tooltipSelectedIndex).length * 10)
               : touchX - tooltipHorizontalShift,
           top:
             touchY < 30
@@ -182,7 +186,7 @@ export const PieChart = (props: PieChartPropsType) => {
           width: (radius + extraRadius + paddingHorizontal / 2) * 2,
           overflow: 'hidden',
         }}>
-        <View style={{position: 'absolute'}}>
+        <View style={{ position: 'absolute' }}>
           <PieChartMain
             {...props}
             setTouchX={setTouchX}
@@ -221,7 +225,7 @@ export const PieChart = (props: PieChartPropsType) => {
                     color: props.showGradient
                       ? `url(#grad${selectedIndex})`
                       : props.data[selectedIndex].color ||
-                        pieColors[selectedIndex % 9],
+                      pieColors[selectedIndex % 9],
                   },
                   {
                     value: total - props.data[selectedIndex].value,
