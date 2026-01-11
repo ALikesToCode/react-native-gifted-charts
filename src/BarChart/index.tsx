@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useRef} from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import {
   Animated,
   Easing,
@@ -15,9 +15,9 @@ import {
   useBarAndLineChartsWrapper,
   useBarChart,
 } from 'gifted-charts-core';
-import {StripAndLabel} from '../Components/common/StripAndLabel';
-import {Pointer} from '../Components/common/Pointer';
-import {screenWidth} from '../utils';
+import { StripAndLabel } from '../Components/common/StripAndLabel';
+import { Pointer } from '../Components/common/Pointer';
+import { screenWidth } from '../utils';
 import RenderLineInBarChart from '../Components/BarAndLineChartsWrapper/renderLineInBarChart';
 
 export const BarChart = (props: BarChartPropsType) => {
@@ -116,13 +116,13 @@ export const BarChart = (props: BarChartPropsType) => {
     parentWidth: props.parentWidth ?? screenWidth,
   });
 
-  const {lineInBarChartProps, lineInBarChartProps2} =
+  const { lineInBarChartProps, lineInBarChartProps2 } =
     useBarAndLineChartsWrapper({
       ...barAndLineChartsWrapperProps,
       isRTL: I18nManager.isRTL,
     });
 
-  const {stackData} = barAndLineChartsWrapperProps;
+  const { stackData } = barAndLineChartsWrapperProps;
 
   const labelsAppear = useCallback(() => {
     opacityValue.setValue(0);
@@ -347,7 +347,7 @@ export const BarChart = (props: BarChartPropsType) => {
                 renderStripAndLabel(null)}
               {
                 pointerLabelComponent &&
-                  renderStripAndLabel(pointerLabelComponent) // no matter what, pointerLabelComponent will be rendered at last -> over the chart content
+                renderStripAndLabel(pointerLabelComponent) // no matter what, pointerLabelComponent will be rendered at last -> over the chart content
               }
             </View>
           ) : null}
@@ -391,7 +391,7 @@ export const BarChart = (props: BarChartPropsType) => {
   const renderChart = () => {
     if (stackData) {
       return stackData.map((item, index) => {
-        const {selectedIndex, ...stackRestProps} = getPropsCommonForBarAndStack(
+        const { selectedIndex, ...stackRestProps } = getPropsCommonForBarAndStack(
           item,
           index,
         );
@@ -440,8 +440,21 @@ export const BarChart = (props: BarChartPropsType) => {
           capColor={props.capColor}
           capRadius={props.capRadius}
           autoShiftLabels={autoShiftLabels}
-          barStyle={props.barStyle}
           {...getPropsCommonForBarAndStack(item, index)}
+          barStyle={props.barStyle}
+          barBorderRadius={item.barBorderRadius ?? props.barBorderRadius}
+          barBorderTopLeftRadius={
+            item.barBorderTopLeftRadius ?? props.barBorderTopLeftRadius
+          }
+          barBorderTopRightRadius={
+            item.barBorderTopRightRadius ?? props.barBorderTopRightRadius
+          }
+          barBorderBottomLeftRadius={
+            item.barBorderBottomLeftRadius ?? props.barBorderBottomLeftRadius
+          }
+          barBorderBottomRightRadius={
+            item.barBorderBottomRightRadius ?? props.barBorderBottomRightRadius
+          }
         />
       ));
     }

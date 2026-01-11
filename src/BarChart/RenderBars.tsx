@@ -1,4 +1,4 @@
-import {View, TouchableOpacity, Animated, Text} from 'react-native';
+import { View, TouchableOpacity, Animated, Text } from 'react-native';
 import AnimatedThreeDBar from '../Components/AnimatedThreeDBar';
 import Animated2DWithGradient from './Animated2DWithGradient';
 import {
@@ -54,7 +54,7 @@ const RenderBars = (props: RenderBarsPropsType) => {
     lowlightOpacity,
   } = props;
 
-  const {heightFactor, barHeight, tooltipProps} = useRenderBars(props);
+  const { heightFactor, barHeight, tooltipProps } = useRenderBars(props);
 
   const {
     commonStyleForBar,
@@ -63,7 +63,7 @@ const RenderBars = (props: RenderBarsPropsType) => {
     isFocused,
     focusedBarConfig,
     localFrontColor,
-  } = getPropsForAnimated2DWithGradient({...props, barHeight});
+  } = getPropsForAnimated2DWithGradient({ ...props, barHeight });
 
   const itemOrPropsBarInnerComponent =
     item.barInnerComponent ?? props.barInnerComponent;
@@ -91,42 +91,42 @@ const RenderBars = (props: RenderBarsPropsType) => {
             height: props.xAxisLabelsHeight ?? xAxisTextNumberOfLines * 18,
             bottom: top
               ? (containerHeight || 200) +
-                (secondaryXAxis?.labelsDistanceFromXaxis ?? 15)
+              (secondaryXAxis?.labelsDistanceFromXaxis ?? 15)
               : (rotateLabel
-                  ? -40
-                  : -6 -
-                    xAxisTextNumberOfLines * 18 -
-                    (value < 0
-                      ? -xAxisLabelsVerticalShift
-                      : xAxisLabelsVerticalShift)) -
-                barMarginBottom -
-                (value < 0 && !autoShiftLabels
-                  ? -labelsDistanceFromXaxis
-                  : labelsDistanceFromXaxis),
+                ? -40
+                : -6 -
+                xAxisTextNumberOfLines * 18 -
+                (value < 0
+                  ? -xAxisLabelsVerticalShift
+                  : xAxisLabelsVerticalShift)) -
+              barMarginBottom -
+              (value < 0 && !autoShiftLabels
+                ? -labelsDistanceFromXaxis
+                : labelsDistanceFromXaxis),
           },
           rotateLabel
             ? horizontal
-              ? {transform: [{rotate: '330deg'}]}
+              ? { transform: [{ rotate: '330deg' }] }
               : {
-                  transform: [
-                    {rotate: value < 0 ? '240deg' : '60deg'},
-                    {translateX: value < 0 ? 56 : 0},
-                    {translateY: value < 0 ? 32 : 0},
-                  ],
-                }
+                transform: [
+                  { rotate: value < 0 ? '240deg' : '60deg' },
+                  { translateX: value < 0 ? 56 : 0 },
+                  { translateY: value < 0 ? 32 : 0 },
+                ],
+              }
             : horizontal
-              ? {transform: [{rotate: '-90deg'}]}
+              ? { transform: [{ rotate: '-90deg' }] }
               : value < 0
                 ? {
-                    transform: [
-                      {rotate: '180deg'},
-                      {
-                        translateY: autoShiftLabels
-                          ? 0
-                          : 16.5 * xAxisTextNumberOfLines + 12,
-                      },
-                    ],
-                  }
+                  transform: [
+                    { rotate: '180deg' },
+                    {
+                      translateY: autoShiftLabels
+                        ? 0
+                        : 16.5 * xAxisTextNumberOfLines + 12,
+                    },
+                  ],
+                }
                 : {},
         ]}>
         {top ? (
@@ -135,8 +135,8 @@ const RenderBars = (props: RenderBarsPropsType) => {
           ) : (
             <Text
               style={[
-                {textAlign: 'center'},
-                rtl && horizontal && {transform: [{rotate: '180deg'}]},
+                { textAlign: 'center' },
+                rtl && horizontal && { transform: [{ rotate: '180deg' }] },
                 labelTextStyle,
               ]}
               numberOfLines={xAxisTextNumberOfLines}>
@@ -148,8 +148,8 @@ const RenderBars = (props: RenderBarsPropsType) => {
         ) : (
           <Text
             style={[
-              {textAlign: 'center'},
-              rtl && horizontal && {transform: [{rotate: '180deg'}]},
+              { textAlign: 'center' },
+              rtl && horizontal && { transform: [{ rotate: '180deg' }] },
               labelTextStyle,
             ]}
             numberOfLines={xAxisTextNumberOfLines}>
@@ -180,37 +180,37 @@ const RenderBars = (props: RenderBarsPropsType) => {
             height:
               props.xAxisLabelsHeight ??
               xAxisTextNumberOfLines * 18 -
-                (value < 0
-                  ? -xAxisLabelsVerticalShift
-                  : xAxisLabelsVerticalShift),
+              (value < 0
+                ? -xAxisLabelsVerticalShift
+                : xAxisLabelsVerticalShift),
             bottom: top
               ? (containerHeight || 200) +
-                (secondaryXAxis?.labelsDistanceFromXaxis ?? 15)
+              (secondaryXAxis?.labelsDistanceFromXaxis ?? 15)
               : (rotateLabel
-                  ? -40
-                  : -6 -
-                    xAxisTextNumberOfLines * 18 -
-                    xAxisLabelsVerticalShift) - barMarginBottom,
+                ? -40
+                : -6 -
+                xAxisTextNumberOfLines * 18 -
+                xAxisLabelsVerticalShift) - barMarginBottom,
             opacity: appearingOpacity,
           },
-          value < 0 && {transform: [{rotate: '180deg'}]},
+          value < 0 && { transform: [{ rotate: '180deg' }] },
           rotateLabel
             ? horizontal
-              ? {transform: [{rotate: '330deg'}]}
-              : {transform: [{rotate: '60deg'}]}
+              ? { transform: [{ rotate: '330deg' }] }
+              : { transform: [{ rotate: '60deg' }] }
             : horizontal
-              ? {transform: [{rotate: '-90deg'}]}
+              ? { transform: [{ rotate: '-90deg' }] }
               : value < 0
                 ? {
-                    transform: [
-                      {rotate: '180deg'},
-                      {
-                        translateY: autoShiftLabels
-                          ? 0
-                          : 16.5 * xAxisTextNumberOfLines + 12,
-                      },
-                    ],
-                  }
+                  transform: [
+                    { rotate: '180deg' },
+                    {
+                      translateY: autoShiftLabels
+                        ? 0
+                        : 16.5 * xAxisTextNumberOfLines + 12,
+                    },
+                  ],
+                }
                 : {},
         ]}>
         {top ? (
@@ -219,8 +219,8 @@ const RenderBars = (props: RenderBarsPropsType) => {
           ) : (
             <Text
               style={[
-                {textAlign: 'center'},
-                rtl && horizontal && {transform: [{rotate: '180deg'}]},
+                { textAlign: 'center' },
+                rtl && horizontal && { transform: [{ rotate: '180deg' }] },
                 labelTextStyle,
               ]}
               numberOfLines={xAxisTextNumberOfLines}>
@@ -232,8 +232,8 @@ const RenderBars = (props: RenderBarsPropsType) => {
         ) : (
           <Text
             style={[
-              {textAlign: 'center'},
-              rtl && horizontal && {transform: [{rotate: '180deg'}]},
+              { textAlign: 'center' },
+              rtl && horizontal && { transform: [{ rotate: '180deg' }] },
               labelTextStyle,
             ]}
             numberOfLines={xAxisTextNumberOfLines}>
@@ -267,10 +267,10 @@ const RenderBars = (props: RenderBarsPropsType) => {
               ? Math.max(minHeight, Math.abs(item.value) * heightFactor)
               : 0),
         },
-        {rotateZ: item.value < 0 ? '180deg' : '0deg'},
+        { rotateZ: item.value < 0 ? '180deg' : '0deg' },
       ],
     },
-    side !== 'right' && {zIndex: data.length - index},
+    side !== 'right' && { zIndex: data.length - index },
   ];
 
   const pressDisabled =
@@ -285,29 +285,53 @@ const RenderBars = (props: RenderBarsPropsType) => {
     const animated2DWithGradient = (
       noGradient: boolean,
       noAnimation: boolean,
-    ) => (
-      <Animated2DWithGradient
-        {...commonPropsFor2dAnd3dBars}
-        animationDuration={animationDuration || 800}
-        roundedBottom={props.roundedBottom || false}
-        roundedTop={props.roundedTop || false}
-        noGradient={noGradient}
-        noAnimation={noAnimation}
-        containerHeight={containerHeight}
-        maxValue={maxValue}
-        minHeight={minHeight ?? 0}
-        barMarginBottom={barMarginBottom}
-        cappedBars={props.cappedBars}
-        capThickness={props.capThickness}
-        capColor={props.capColor}
-        capRadius={props.capRadius}
-        horizontal={horizontal}
-        barBorderWidth={barBorderWidth}
-        barBorderColor={barBorderColor}
-        commonStyleForBar={commonStyleForBar}
-        barStyleWithBackground={barStyleWithBackground}
-      />
-    );
+    ) => {
+      const extendedBarStyle = [
+        props.barStyle || item.barStyle,
+        {
+          borderTopLeftRadius:
+            item.barBorderTopLeftRadius ??
+            props.barBorderTopLeftRadius ??
+            (item.barBorderRadius ?? props.barBorderRadius),
+          borderTopRightRadius:
+            item.barBorderTopRightRadius ??
+            props.barBorderTopRightRadius ??
+            (item.barBorderRadius ?? props.barBorderRadius),
+          borderBottomLeftRadius:
+            item.barBorderBottomLeftRadius ??
+            props.barBorderBottomLeftRadius ??
+            (item.barBorderRadius ?? props.barBorderRadius),
+          borderBottomRightRadius:
+            item.barBorderBottomRightRadius ??
+            props.barBorderBottomRightRadius ??
+            (item.barBorderRadius ?? props.barBorderRadius),
+        },
+      ];
+      return (
+        <Animated2DWithGradient
+          {...commonPropsFor2dAnd3dBars}
+          animationDuration={animationDuration || 800}
+          roundedBottom={props.roundedBottom || false}
+          roundedTop={props.roundedTop || false}
+          noGradient={noGradient}
+          noAnimation={noAnimation}
+          containerHeight={containerHeight}
+          maxValue={maxValue}
+          minHeight={minHeight ?? 0}
+          barMarginBottom={barMarginBottom}
+          cappedBars={props.cappedBars}
+          capThickness={props.capThickness}
+          capColor={props.capColor}
+          capRadius={props.capRadius}
+          horizontal={horizontal}
+          barBorderWidth={barBorderWidth}
+          barBorderColor={barBorderColor}
+          commonStyleForBar={commonStyleForBar}
+          barStyleWithBackground={barStyleWithBackground}
+          barStyle={extendedBarStyle}
+        />
+      );
+    };
     return (
       <>
         {(props.showXAxisIndices || item.showXAxisIndex) && (
@@ -357,17 +381,17 @@ const RenderBars = (props: RenderBarsPropsType) => {
         {secondaryXAxis
           ? isAnimated
             ? renderAnimatedLabel(
-                true,
-                secondaryLabel,
-                secondaryLabelTextStyle,
-                item.value,
-              )
+              true,
+              secondaryLabel,
+              secondaryLabelTextStyle,
+              item.value,
+            )
             : renderLabel(
-                true,
-                secondaryLabel,
-                secondaryLabelTextStyle,
-                item.value,
-              )
+              true,
+              secondaryLabel,
+              secondaryLabelTextStyle,
+              item.value,
+            )
           : null}
       </>
     );
